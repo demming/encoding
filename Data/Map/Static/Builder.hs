@@ -1,11 +1,11 @@
 module Data.Map.Static.Builder where
 
-import Data.Static
-import Data.Array.Static.Builder
+import           Data.Array.Static.Builder
+import           Data.Static
 
-import Data.List
-import Data.Ord
-import Data.Bits
+import           Data.Bits
+import           Data.List
+import           Data.Ord
 
 buildStaticMap :: (StaticElement i,StaticElement e,Ord i) => [(i,e)] -> String
 buildStaticMap lst = let  step :: Int -> [(i,e)] -> [(Int,(i,e))]
@@ -37,6 +37,6 @@ treeDepth sz = find' [0..]
 findSplitSize :: Int -> Int
 findSplitSize len = let depth = treeDepth len
                         free = (maxSize depth) - len
-                    in if free <= (1 `shiftL` (depth - 2))
+                    in if 2 * free <= (1 `shiftL` (depth - 1))
                        then maxSize (depth - 1)
                        else len - (maxSize (depth - 2)) - 1
